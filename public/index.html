@@ -329,7 +329,7 @@ body::before {
 <script>
 /* ─────────── STATE ─────────── */
 let STOCKS = {};
-let cur = 'AAPL', curDays = 30;
+let cur = 'RELIANCE.NS', curDays = 30;
 let priceChart = null, volChart = null, macdChart = null;
 
 /* ─────────── RENDER ─────────── */
@@ -387,7 +387,7 @@ async function renderPriceChart(ticker, days, apiData) {
       },
       scales: {
         x: { ticks: { maxTicksLimit: 10, color: '#555a6e', font: { family: 'IBM Plex Mono', size: 10 } }, grid: { color: 'rgba(255,255,255,0.04)' } },
-        y: { ticks: { color: '#555a6e', font: { family: 'IBM Plex Mono', size: 10 }, callback: v => '$' + v.toFixed(0) }, grid: { color: 'rgba(255,255,255,0.04)' } }
+        y: { ticks: { color: '#555a6e', font: { family: 'IBM Plex Mono', size: 10 }, callback: v => '₹' + v.toFixed(0) }, grid: { color: 'rgba(255,255,255,0.04)' } }
       }
     }
   });
@@ -446,7 +446,7 @@ function updateMetrics(ticker, apiData) {
   const chgPct = st.dayChg;
   const up = chgPct >= 0;
 
-  document.getElementById('m-price').textContent = '$' + cur.toFixed(2);
+  document.getElementById('m-price').textContent = '₹' + cur.toFixed(2);
   document.getElementById('m-price').style.color = up ? '#22c55e' : '#ef4444';
   document.getElementById('m-change').textContent = (up ? '▲ +' : '▼ ') + chgPct.toFixed(2) + '% today';
   document.getElementById('m-change').style.color = up ? '#22c55e' : '#ef4444';
@@ -455,7 +455,7 @@ function updateMetrics(ticker, apiData) {
   const p7 = preds[6].price;
   const p7chg = ((p7 - cur) / cur * 100).toFixed(2);
   const p7up = p7 >= cur;
-  document.getElementById('m-pred').textContent = '$' + p7.toFixed(2);
+  document.getElementById('m-pred').textContent = '₹' + p7.toFixed(2);
   document.getElementById('m-pred').style.color = p7up ? '#22c55e' : '#ef4444';
   document.getElementById('m-pred-sub').textContent = (p7up ? '▲ +' : '▼ ') + p7chg + '% vs current';
   document.getElementById('m-pred-sub').style.color = p7up ? '#22c55e' : '#ef4444';
@@ -488,11 +488,11 @@ function updateMetrics(ticker, apiData) {
     <div style="display:flex;justify-content:space-between;align-items:center">
       <span style="font-family:var(--mono);font-size:11px;color:var(--text3)">${m.label}</span>
       <div style="flex:1;margin:0 10px;height:1px;background:var(--border)"></div>
-      <span style="font-family:var(--mono);font-size:12px;font-weight:500;color:${m.color}">$${m.val.toFixed(1)}</span>
+      <span style="font-family:var(--mono);font-size:12px;font-weight:500;color:${m.color}">₹${m.val.toFixed(1)}</span>
     </div>
   `).join('') + `
     <div style="margin-top:8px;font-size:11px;color:var(--text2);font-family:var(--mono)">
-      Current: <span style="color:var(--text);font-weight:500">$${currentPrice.toFixed(2)}</span>
+      Current: <span style="color:var(--text);font-weight:500">₹${currentPrice.toFixed(2)}</span>
     </div>`;
 
   // Mini models
@@ -530,7 +530,7 @@ function updateMetrics(ticker, apiData) {
     <tr>
       <td style="color:var(--text2)">${r.day}</td>
       <td>${r.date}</td>
-      <td style="font-weight:600;color:${r.price >= cur ? '#22c55e' : '#ef4444'}">$${r.price.toFixed(2)}</td>
+      <td style="font-weight:600;color:${r.price >= cur ? '#22c55e' : '#ef4444'}">₹${r.price.toFixed(2)}</td>
       <td style="color:${r.delta >= 0 ? '#22c55e' : '#ef4444'}">${r.delta >= 0 ? '+' : ''}${r.delta.toFixed(2)}</td>
       <td style="color:${r.pct >= 0 ? '#22c55e' : '#ef4444'}">${r.pct >= 0 ? '+' : ''}${r.pct.toFixed(2)}%</td>
       <td style="color:var(--text2)">${r.conf.toFixed(1)}%</td>
@@ -568,7 +568,7 @@ async function init() {
   try {
     const res = await fetch('/api/stocks');
     STOCKS = await res.json();
-    selectStock('AAPL');
+    selectStock('RELIANCE.NS');
   } catch(e) {
     console.error('Failed to init app:', e);
   }

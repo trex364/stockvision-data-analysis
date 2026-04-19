@@ -329,7 +329,7 @@ body::before {
 <script>
 /* ─────────── STATE ─────────── */
 let STOCKS = {};
-let cur = 'RELIANCE.NS', curDays = 30;
+let cur = 'RELIANCE', curDays = 30;
 let priceChart = null, volChart = null, macdChart = null;
 
 /* ─────────── RENDER ─────────── */
@@ -568,7 +568,7 @@ async function init() {
   try {
     const res = await fetch('/api/stocks');
     STOCKS = await res.json();
-    selectStock('RELIANCE.NS');
+    selectStock('RELIANCE');
   } catch(e) {
     console.error('Failed to init app:', e);
   }

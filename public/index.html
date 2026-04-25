@@ -416,8 +416,8 @@ function renderVolChart(ticker, days, apiData) {
   });
 }
 
-function renderMacdChart(ticker) {
-  const st = STOCKS[ticker];
+function renderMacdChart(ticker, apiData) {
+  const st = apiData.data;
   if (macdChart) macdChart.destroy();
   const ctx = document.getElementById('macdChart').getContext('2d');
   const colors = st.macd.map(v => v >= 0 ? 'rgba(34,197,94,0.7)' : 'rgba(239,68,68,0.7)');
@@ -441,7 +441,7 @@ function renderMacdChart(ticker) {
 }
 
 function updateMetrics(ticker, apiData) {
-  const st = STOCKS[ticker];
+  const st = apiData.data;
   const cur = apiData.currentPrice;
   const chgPct = st.dayChg;
   const up = chgPct >= 0;
@@ -545,7 +545,7 @@ async function selectStock(sym) {
   const apiData = await fetchStockData(sym, curDays);
   renderPriceChart(sym, curDays, apiData);
   renderVolChart(sym, curDays, apiData);
-  renderMacdChart(sym);
+  renderMacdChart(sym, apiData);
   updateMetrics(sym, apiData);
 }
 
